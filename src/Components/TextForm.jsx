@@ -5,9 +5,7 @@ export default function TextForm(props) {
     setText(newText);
   };
   const handleCopy = () => {
-    let text = document.getElementById("myBox");
-    text.select();
-    navigator.clipboard.writeText(text.value);
+    navigator.clipboard.writeText(text);
   };
   const handleExtraSpaces = () => {
     let newtext = text.split(/[ ]+/);
@@ -53,6 +51,7 @@ export default function TextForm(props) {
 
           <button
             type="button"
+            disabled={text.length === 0}
             onClick={handleUpClick}
             className="btn btn-primary mx-3 my-3"
           >
@@ -60,6 +59,7 @@ export default function TextForm(props) {
           </button>
           <button
             type="button"
+            disabled={text.length === 0}
             onClick={handleLoClick}
             className="btn btn-primary mx-3 my-3"
           >
@@ -67,6 +67,7 @@ export default function TextForm(props) {
           </button>
           <button
             type="button"
+            disabled={text.length === 0}
             onClick={setTextToEmpty}
             className="btn btn-primary mx-3 my-3"
           >
@@ -75,6 +76,7 @@ export default function TextForm(props) {
           <button
             type="button"
             onClick={handleCopy}
+            disabled={text.length === 0}
             className="btn btn-primary mx-3 my-3"
           >
             Copy Text
@@ -82,6 +84,7 @@ export default function TextForm(props) {
           <button
             type="button"
             onClick={handleExtraSpaces}
+            disabled={text.length === 0}
             className="btn btn-primary mx-3 my-3"
           >
             Remove Extra Spaces
@@ -89,6 +92,7 @@ export default function TextForm(props) {
           <button
             type="button"
             onClick={handleSpaces}
+            disabled={text.length === 0}
             className="btn btn-primary mx-3 my-3"
           >
             Remove Spaces
@@ -97,7 +101,12 @@ export default function TextForm(props) {
         <div className="container">
           <h2>Your Text Summary</h2>
           <p>
-            {text.split(" ").length} Words and {text.length} Characters
+            {
+              text.split(/\s+/).filter((element) => {
+                return element.length !== 0;
+              }).length
+            }
+            Words and {text.length} Characters
           </p>
           <p>{0.008 * text.split(" ").length} Minute takes to reads</p>
           <h2>Preview</h2>
